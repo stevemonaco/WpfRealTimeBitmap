@@ -14,6 +14,6 @@
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" Text="{Binding FramesPerSecond, StringFormat=FPS: {0}}" />
-        <Image Grid.Row="1" Width="1000" Height="1000" Source="{Binding Adapter.Bitmap}" />
+        <Image Grid.Row="1" Width="{Binding Adapter.Width}" Height="{Binding Adapter.Height}" Source="{Binding Adapter.Bitmap}" />
     </Grid>
 </Window>
