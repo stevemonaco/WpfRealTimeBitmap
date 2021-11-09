@@ -6,14 +6,14 @@
         xmlns:local="clr-namespace:WpfRealTimeBitmap"
         d:DataContext="{d:DesignInstance Type=local:MainWindow}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="1250" Width="1050">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" Text="{Binding FramesPerSecond, StringFormat=FPS: {0}}" />
-        <Image Grid.Row="1" Source="{Binding Adapter.Bitmap}" />
+        <Image Grid.Row="1" Width="1000" Height="1000" Source="{Binding Adapter.Bitmap}" />
     </Grid>
 </Window>

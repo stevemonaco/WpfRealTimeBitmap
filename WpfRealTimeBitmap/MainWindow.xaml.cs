@@ -42,8 +42,8 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
         _lastFrameUpdate = DateTime.Now;
 
-        _renderTimer = new();
-        _renderTimer.Interval = TimeSpan.FromMilliseconds(10);
+        _renderTimer = new(DispatcherPriority.Render);
+        _renderTimer.Interval = TimeSpan.FromMilliseconds(1);
         _renderTimer.Tick += RenderTimer_Tick;
         _renderTimer.Start();
     }
