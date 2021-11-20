@@ -84,8 +84,6 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         StartRendering();
     }
 
-    //private void ResizeImage_Click(object sender, RoutedEventArgs e) => ResizeImage();
-
     private void InitializeRenderer()
     {
         _lastFrameUpdate = DateTime.Now;
@@ -95,15 +93,6 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     }
 
     private void ApplySettings_Click(object sender, RoutedEventArgs e)
-    {
-        PauseRendering();
-        _image = new ColorScaleImage(ImageWidth, ImageHeight);
-        Adapter = new ColorScaleBitmapAdapter(_image);
-        Adapter.UseParallelRenderStrategy = UseParallelStrategy;
-        StartRendering();
-    }
-
-    private void ResizeImage()
     {
         PauseRendering();
         _image = new ColorScaleImage(ImageWidth, ImageHeight);
