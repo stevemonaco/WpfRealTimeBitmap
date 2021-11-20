@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WpfRealTimeBitmap"
         d:DataContext="{d:DesignInstance Type=local:MainWindow}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="1250" Width="1050">
+        Title="WpfRealTimeBitmap" Height="1250" Width="1050">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -27,10 +27,10 @@
                 </CheckBox.ToolTip>
             </CheckBox>
             <TextBlock Margin="6,0,0,0" Text="Width" />
-            <TextBox Text="{Binding ImageWidth}" />
+            <TextBox Margin="4,0,0,0" MinWidth="60" Text="{Binding ImageWidth}" />
             <TextBlock Margin="6,0,0,0" Text="Height" />
-            <TextBox Text="{Binding ImageHeight}" />
-            <Button Content="Apply Settings" Click="ApplySettings_Click" />
+            <TextBox Margin="4,0,0,0" MinWidth="60" Text="{Binding ImageHeight}" />
+            <Button Margin="6,0,0,0" Content="Apply Settings" Click="ApplySettings_Click" />
         </StackPanel>
 
         <Image Grid.Row="1" Width="{Binding Adapter.Width}" Height="{Binding Adapter.Height}" Source="{Binding Adapter.Bitmap}" />
