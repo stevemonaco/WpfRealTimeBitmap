@@ -11,9 +11,28 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="{Binding FramesPerSecond, StringFormat=FPS: {0}}" />
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Margin="10,0,0,0" Grid.Row="0" Text="{Binding FramesPerSecond, StringFormat=FPS: {0}}" />
+            <CheckBox Margin="10,0,0,0" IsChecked="{Binding UseParallelStrategy}" Content="Parallelized Copy">
+                <CheckBox.ToolTip>
+                    <TextBlock Text="Uses Parallel.For to perform the copy from an unscaled [0, 1] image onto the WriteableBitmap" />
+                </CheckBox.ToolTip>
+            </CheckBox>
+            <CheckBox IsChecked="{Binding UseCompositionRenderer}" Content="Composition Renderer">
+                <CheckBox.ToolTip>
+                    <TextBlock Text="Use CompositionTarget.Renderering callback, otherwise use DispatcherTimer to initiate frame renders" />
+                </CheckBox.ToolTip>
+            </CheckBox>
+            <TextBlock Margin="6,0,0,0" Text="Width" />
+            <TextBox Text="{Binding ImageWidth}" />
+            <TextBlock Margin="6,0,0,0" Text="Height" />
+            <TextBox Text="{Binding ImageHeight}" />
+            <Button Content="Apply Settings" Click="ApplySettings_Click" />
+        </StackPanel>
+
         <Image Grid.Row="1" Width="{Binding Adapter.Width}" Height="{Binding Adapter.Height}" Source="{Binding Adapter.Bitmap}" />
     </Grid>
 </Window>
