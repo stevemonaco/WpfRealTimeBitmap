@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace WpfRealTimeBitmap;
 
 /// <summary>
-/// Provides an editing/viewing layer around an Arranger
+/// Provides a generalized base for an image not tied to any framework
 /// </summary>
 /// <typeparam name="TPixel"></typeparam>
 public abstract class ImageBase<TPixel> where TPixel : struct
