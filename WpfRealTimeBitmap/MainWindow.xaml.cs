@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -70,7 +71,6 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     public MainWindow()
     {
         InitializeComponent();
-        DataContext = this;
 
         _lastFrameUpdate = DateTime.Now;
 
@@ -80,16 +80,15 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
         UseParallelStrategy = true;
         UseCompositionRenderer = true;
-        InitializeRenderer();
-        StartRendering();
-    }
-
-    private void InitializeRenderer()
-    {
         _lastFrameUpdate = DateTime.Now;
         _image = new ColorScaleImage(ImageWidth, ImageHeight);
-        Adapter = new ColorScaleBitmapAdapter(_image);
-        Adapter.UseParallelRenderStrategy = UseParallelStrategy;
+        _adapter = new ColorScaleBitmapAdapter(_image)
+        {
+            UseParallelRenderStrategy = UseParallelStrategy
+        };
+
+        StartRendering();
+        DataContext = this;
     }
 
     private void ApplySettings_Click(object sender, RoutedEventArgs e)
@@ -112,6 +111,44 @@ public partial class MainWindow : Window, INotifyPropertyChanged
             FramesPerSecond = _framesSinceUpdate;
             _framesSinceUpdate = 0;
             _lastFrameUpdate = DateTime.Now;
+        }
+
+        RenderTextOverlay();
+    }
+
+    private void RenderTextOverlay()
+    {
+        var imageInfo = new SKImageInfo()
+        {
+            Width = _image.Width,
+            Height = _image.Height,
+            ColorType = SKColorType.Bgra8888,
+            AlphaType = SKAlphaType.Premul,
+            ColorSpace = SKColorSpace.CreateSrgb()
+        };
+
+        try
+        {
+            Adapter.Bitmap!.Lock();
+
+            using var surface = SKSurface.Create(imageInfo, Adapter.Bitmap.BackBuffer);
+            using var paint = new SKPaint()
+            {
+                TextSize = 24.0f,
+                IsAntialias = true,
+                Color = new SKColor(0x42, 0x81, 0xA4),
+                IsStroke = false
+            };
+
+            var canvas = surface.Canvas;
+            canvas.DrawText($"FPS: {_framesPerSecond}", 20, 40, paint);
+            canvas.DrawText($"Size: {_imageWidth}x{_imageHeight}", 20, 70, paint);
+
+            Adapter.Bitmap.AddDirtyRect(new Int32Rect(0, 0, _image.Width, _image.Height));
+        }
+        finally
+        {
+            Adapter.Bitmap!.Unlock();
         }
     }
 
