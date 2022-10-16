@@ -1,10 +1,12 @@
 ﻿using System;
+using WpfRealTimeBitmap.Rng;
 
 namespace WpfRealTimeBitmap;
 
 public class ColorScaleImage : ImageBase<float>
 {
-    private Random _rng = new();
+    //private Random _rng = new();
+    private XoshiroRandom _rng = new();
 
     public ColorScaleImage(int width, int height)
     {
@@ -19,7 +21,7 @@ public class ColorScaleImage : ImageBase<float>
         {
             for (int i = 0; i < Image.Length; i++)
             {
-                Image[i] = (float)_rng.NextDouble();
+                Image[i] = _rng.NextSingle();
             }
         }
     }
